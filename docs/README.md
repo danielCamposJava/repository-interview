@@ -1,13 +1,4 @@
-# 🏗️ Desafio Fullstack Integrado
-🚨 Instrução Importante (LEIA ANTES DE COMEÇAR)
-❌ NÃO faça fork deste repositório.
 
-Este repositório é fornecido como modelo/base. Para realizar o desafio, você deve:
-✅ Opção correta (obrigatória)
-  Clique em “Use this template” (se este repositório estiver marcado como Template)
-OU
-  Clone este repositório e crie um NOVO repositório público em sua conta GitHub.
-📌 O resultado deve ser um repositório próprio, independente deste.
 
 ## 🎯 Objetivo
 Criar solução completa em camadas (DB, EJB, Backend, Frontend), corrigindo bug em EJB e entregando aplicação funcional.
