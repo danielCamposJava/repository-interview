@@ -1,0 +1,10 @@
+<h2>Transferência</h2>
+
+<div>
+  <input type="number" placeholder="ID origem" [(ngModel)]="fromId">
+  <input type="number" placeholder="ID destino" [(ngModel)]="toId">
+  <input type="number" placeholder="Valor" [(ngModel)]="amount">
+  <button (click)="transfer()">Transferir</button>
+</div>
+
+<p *ngIf="message">{{ message }}</p>
