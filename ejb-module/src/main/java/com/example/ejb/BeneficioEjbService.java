@@ -1,9 +1,11 @@
 package com.example.ejb;
 
-import com.example.ejb.entity.Beneficio;
+import com.example.backend.entity.Beneficio;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.OptimisticLockException;
+
 import java.math.BigDecimal;
 
 @Stateless
@@ -14,26 +16,29 @@ public class BeneficioEjbService {
 
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
 
-      if(fromId.equals(toId)){
-      throw  new IllegalArgumentException("a transferencia no poded ser igual");
-      }
 
-      if( amount == null || amount.compareTo(BigDecimal.ZERO) <= 0 ){
-          throw new IllegalArgumentException("a transferencia no pode ser igual");
-      }
+        Beneficio from = em.find(Beneficio.class, fromId);
+        Beneficio to   = em.find(Beneficio.class, toId);
 
-        Beneficio from = null;
-        Beneficio to = null;
-        if( from == null  ||  to == null ){
-          throw new IllegalArgumentException("a transferencia não pode ser igual");
-      }
+
         if (from.getValor().compareTo(amount) < 0) {
-            throw new IllegalStateException("Saldo insuficiente");
+
+            throw new IllegalArgumentException("Saldo insuficiente para transferência");
+
         }
+
+
         from.setValor(from.getValor().subtract(amount));
         to.setValor(to.getValor().add(amount));
 
-        em.persist(from);
-        em.persist(to);
+        try {
+
+            em.merge(from);
+            em.merge(to);
+            em.flush();
+
+        } catch (OptimisticLockException e) {
+            throw new RuntimeException("Erro de concorrência: outra transferência alterou os valores ao mesmo tempo", e);
+        }
     }
 }

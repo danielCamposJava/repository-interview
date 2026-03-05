@@ -1,8 +1,8 @@
 package com.example.backend.service;
 
+import com.example.backend.entity.Beneficio;
 import com.example.backend.repository.BeneficioRepository;
 import com.example.ejb.BeneficioEjbService;
-import com.example.ejb.entity.Beneficio;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,15 +21,15 @@ public class BeneficioService {
         this.ejbService = ejbService;
     }
 
-    public List<com.example.ejb.entity.Beneficio> findAll() {
+    public List<Beneficio> findAll() {
         return repository.findAll();
     }
 
-    public Optional<com.example.ejb.entity.Beneficio> findById(Long id) {
+    public Optional<Beneficio> findById(Long id) {
         return repository.findById(id);
     }
 
-    public com.example.ejb.entity.Beneficio save(Beneficio beneficio) {
+    public Beneficio save(Beneficio beneficio) {
         return repository.save(beneficio);
     }
 
@@ -38,6 +38,7 @@ public class BeneficioService {
     }
 
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
+
         ejbService.transfer(fromId, toId, amount);
     }
 }
